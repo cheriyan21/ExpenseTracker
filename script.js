@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const downloadBtn = document.getElementById('downloadBtn');
   const clearBtn = document.getElementById('clearBtn');
 
-  let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+  let transactions = JSON.parse(sessionStorage.getItem('transactions')) || [];
 
   function addTransaction(e) {
     e.preventDefault();
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       updateValues();
 
-      updateLocalStorage();
+      updateSessionStorage();
 
       text.value = '';
       amount.value = '';
@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function removeTransaction(id) {
     transactions = transactions.filter(transaction => transaction.id !== id);
-    updateLocalStorage();
+    updateSessionStorage();
     init();
   }
 
-  function updateLocalStorage() {
-    localStorage.setItem('transactions', JSON.stringify(transactions));
+  function updateSessionStorage() {
+    sessionStorage.setItem('transactions', JSON.stringify(transactions));
   }
 
   function init() {
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function clearAllTransactions() {
     transactions = [];
-    updateLocalStorage();
+    updateSessionStorage();
     init();
   }
 
