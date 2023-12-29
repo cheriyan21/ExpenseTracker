@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const downloadBtn = document.getElementById('downloadBtn');
   const clearBtn = document.getElementById('clearBtn');
 
-  let transactions =
-    JSON.parse(localStorage.getItem('transactions')) || [];
+  let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
   function addTransaction(e) {
     e.preventDefault();
@@ -87,32 +86,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function downloadTransactions() {
-    // Create a jsPDF instance
-    const pdf = new jsPDF();
+    const content = document.getElementById('list');
 
-    // Set the document properties
-    pdf.setProperties({
-      title: 'Transaction History',
-      subject: 'Expense Tracker',
-      author: 'Your Name',
+    html2pdf(content, {
+      margin: 10,
+      filename: 'transactions.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     });
-
-    // Add content to the PDF
-    const content = {
-      startY: 20,
-      head: ['Transaction Name', 'Expense'],
-      body: transactions.map(transaction => [transaction.text, transaction.amount]),
-      foot: [['Total Balance', getTotalBalance()]],
-    };
-
-    pdf.autoTable(content);
-
-    // Save the PDF as 'transactions.pdf'
-    pdf.save('transactions.pdf');
-  }
-
-  function getTotalBalance() {
-    return transactions.reduce((total, transaction) => total + transaction.amount, 0).toFixed(2);
   }
 
   function clearAllTransactions() {
