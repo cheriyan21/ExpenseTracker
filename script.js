@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const amount = document.getElementById('amount');
   const downloadBtn = document.getElementById('downloadBtn');
   const clearBtn = document.getElementById('clearBtn');
+  const closeBtn = document.getElementById('closeBtn');
 
   let transactions = JSON.parse(sessionStorage.getItem('transactions')) || [];
 
@@ -103,9 +104,14 @@ document.addEventListener('DOMContentLoaded', function () {
     init();
   }
 
+  function closeWebpage() {
+    window.close();
+  }
+
   form.addEventListener('submit', addTransaction);
   downloadBtn.addEventListener('click', downloadTransactions);
   clearBtn.addEventListener('click', clearAllTransactions);
+  closeBtn.addEventListener('click', closeWebpage);
 
   // Event delegation for dynamically added buttons
   list.addEventListener('click', function (e) {
